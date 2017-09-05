@@ -1,0 +1,23 @@
+{
+  "name": "iot-map",
+  "scripts": {
+    "dev": "SERVER_ADDR=http://localhost:3000 next -p 3001",
+    "build": "next build",
+    "heroku-postbuild": "yarn build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "fetch-everywhere": "^1.0.5",
+    "leaflet": "^1.2.0",
+    "next": "^3.2.1",
+    "prop-types": "latest",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-leaflet": "^1.6.5",
+    "react-leaflet-marker-layer": "DoubleYo/react-leaflet-marker-layer",
+    "react-leaflet-universal": "^1.1.0",
+    "react-no-ssr": "^1.1.0",
+    "styled-components": "^2.1.2",
+    "webpack": "latest"
+  }
+}
