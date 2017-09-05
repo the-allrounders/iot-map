@@ -2,8 +2,7 @@
   "name": "iot-map",
   "scripts": {
     "dev": "SERVER_ADDR=http://localhost:3000 next -p 3001",
-    "build": "next build",
-    "heroku-postbuild": "yarn build",
+    "build": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
