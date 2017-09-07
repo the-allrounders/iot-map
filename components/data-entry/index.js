@@ -7,7 +7,7 @@ const Nr = ({ value, stepPrecision = 0 }) => {
     value = parseFloat(value.toFixed(stepPrecision));
   }
   return (
-    <AnimatedNumber value={value} stepPrecision={stepPrecision} formatValue={x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} />
+    <AnimatedNumber value={value} stepPrecision={stepPrecision} formatValue={val => val.toFixed(stepPrecision)} />
   );
 };
 
