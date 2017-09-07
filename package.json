@@ -1,11 +1,14 @@
 {
   "name": "iot-map",
   "scripts": {
-    "dev": "SERVER_ADDR=http://localhost:3000 next -p 3001",
+    "dev": "next -p 3001",
+    "dev:local": "SERVER_ADDR=http://localhost:3000 next -p 3001",
     "build": "next build && next export",
-    "start": "next start"
+    "start": "next start",
+    "toolbox": "react-toolbox-themr --config=./.toolbox"
   },
   "dependencies": {
+    "babel-plugin-inline-import": "^2.0.6",
     "fetch-everywhere": "^1.0.5",
     "leaflet": "^1.2.0",
     "next": "^3.2.1",
@@ -13,10 +16,14 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-leaflet": "^1.6.5",
-    "react-leaflet-marker-layer": "DoubleYo/react-leaflet-marker-layer",
+    "react-leaflet-marker-layer": "ianwensink/react-leaflet-marker-layer",
     "react-leaflet-universal": "^1.1.0",
     "react-no-ssr": "^1.1.0",
+    "react-toolbox": "^2.0.0-beta.12",
     "styled-components": "^2.1.2",
     "webpack": "latest"
+  },
+  "devDependencies": {
+    "react-toolbox-themr": "^1.0.2"
   }
 }

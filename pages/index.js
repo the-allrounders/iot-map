@@ -1,17 +1,24 @@
+import fetch from 'fetch-everywhere';
 import React, { Component } from 'react';
 import NoSSR from 'react-no-ssr'
-import fetch from 'fetch-everywhere';
+import NavDrawer from 'react-toolbox/lib/layout/NavDrawer';
+import Layout from 'react-toolbox/lib/layout/Layout';
+import Panel from 'react-toolbox/lib/layout/Panel';
+import ThemeProvider from 'react-toolbox/lib/ThemeProvider';
+import Button from 'react-toolbox/lib/button/Button';
 import styled from 'styled-components';
 import Head from '../components/head/head';
 import Marker from '../components/marker';
-import CurrentPosition from '../components/current-position';
+import DevicePanel from '../components/device-panel';
+import themeCss from '../static/theme.css';
+import theme from '../static/theme.js';
 
 const Wrapper = styled.section`
   width: 100vw;
   height: 100vh;
   
   .leaflet-container {
-      width: 100vw;
+      width: 100%;
       height: 100vh;
   }
 `;
@@ -24,10 +31,13 @@ class MapPage extends Component {
     },
     loaded: false,
     devices: [],
+    drawerActive: false,
+    activeDevice: null,
   };
 
   componentDidMount() {
     this.mounted = true;
+    this.lastFetch = Date.now();
     this.fetchData();
     requestAnimationFrame(() => this.interval());
     this.Leaflet = require('react-leaflet');
@@ -39,14 +49,24 @@ class MapPage extends Component {
     this.mounted = false;
   }
 
+  onMarkerSelect(id) {
+    this.setState({
+      activeDevice: id,
+      drawerActive: true,
+    });
+  }
+
   fetchData() {
-    fetch(`${process.env.SERVER_ADDR}/data?timestamp=${this.lastFetch || Date.now()}`)
+    fetch(`${process.env.SERVER_ADDR || 'https://iot-open-server.herokuapp.com'}/data${this.lastFetch ? `?timestamp=${this.lastFetch}` : ''}`)
       .then(res => res.json())
       .then((json) => {
+        const filteredDevices = json.devices.filter(device => device.location);
         this.setState({
-          devices: json.devices,
+          devices: filteredDevices,
         });
-        this.lastFetch = json.timestamp;
+        if(json.timestamp) {
+          this.lastFetch = json.timestamp;
+        }
       })
       .catch(console.error);
   }
@@ -56,8 +76,9 @@ class MapPage extends Component {
       return;
     }
 
-    if(this.lastFetch + 5000 < Date.now()) { // Fetch every second
+    if(this.lastFetch + 1000 < Date.now()) { // Fetch every second
       this.fetchData();
+      this.lastFetch = Date.now();
     }
 
     requestAnimationFrame(() => this.interval());
@@ -69,34 +90,53 @@ class MapPage extends Component {
     }
     const { Map, TileLayer, MarkerLayer } = this.Leaflet;
     return (
-      <div>
-        <Head title="Home" />
-        <Wrapper>
+      <ThemeProvider theme={theme}>
+        <div>
+          <Head title="Home" />
           <NoSSR onSSR={<span>Loading map...</span>}>
-            <Map
-              center={this.state.currentPosition}
-              zoom={10}
-              ref={c => this.map = c}
-            >
-              <MarkerLayer
-                markers={this.state.devices}
-                latitudeExtractor={e => e.location.latitude}
-                longitudeExtractor={e => e.location.longitude}
-                markerComponent={Marker}
-              />
-              <MarkerLayer
-                markers={[this.state.currentPosition]}
-                latitudeExtractor={l => l.lat}
-                longitudeExtractor={l => l.lng}
-                markerComponent={CurrentPosition}
-              />
-              <TileLayer
-                url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-              />
-            </Map>
+            <Wrapper>
+              <style global jsx>{themeCss}</style>
+              <Layout>
+                <Panel>
+                  <Map
+                    center={this.state.currentPosition}
+                    zoom={10}
+                    ref={c => this.map = c}
+                  >
+                    <MarkerLayer
+                      markers={this.state.devices}
+                      latitudeExtractor={e => e.location.latitude}
+                      longitudeExtractor={e => e.location.longitude}
+                      markerComponent={Marker}
+                      propsForMarkers={{
+                        onMarkerSelect: id => this.onMarkerSelect(id),
+                      }}
+                    />
+                    {/*<MarkerLayer*/}
+                    {/*markers={[this.state.currentPosition]}*/}
+                    {/*latitudeExtractor={l => l.lat}*/}
+                    {/*longitudeExtractor={l => l.lng}*/}
+                    {/*markerComponent={CurrentPosition}*/}
+                    {/*/>*/}
+                    <TileLayer
+                      url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+                    />
+                  </Map>
+                </Panel>
+                <NavDrawer
+                  active={this.state.drawerActive}
+                  pinned={this.state.drawerActive}
+                  right
+                  width='wide'
+                >
+                  <DevicePanel device={this.state.devices.find(device => device._id === this.state.activeDevice)} />
+                  <Button icon='close' floating accent mini onMouseUp={() => this.setState({ drawerActive: false })} />
+                </NavDrawer>
+              </Layout>
+            </Wrapper>
           </NoSSR>
-        </Wrapper>
-      </div>
+        </div>
+      </ThemeProvider>
     )
   }
 }

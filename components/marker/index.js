@@ -5,13 +5,12 @@ class Marker extends Component {
   ref = null;
 
   onMarkerSelect() {
-    console.log('Clicked!');
+    this.props.onMarkerSelect(this.props.marker._id);
   }
 
   render() {
     const customStyle = {
-      marker: {
-      },
+      marker: {},
       icon: {
         width: '32px',
         height: '32px',

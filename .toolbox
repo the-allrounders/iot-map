@@ -1,0 +1,26 @@
+{
+  "include": [
+    "BUTTON",
+    "CARD",
+    "CHECKBOX",
+    "DIALOG",
+    "DRAWER",
+    "DROPDOWN",
+    "INPUT",
+    "LAYOUT",
+    "LINK",
+    "LIST",
+    "OVERLAY",
+    "RADIO",
+    "RIPPLE",
+    "SWITCH"
+  ],
+  "customProperties": {
+    "animation-duration": "0.3s",
+    "color-accent": "var(--palette-pink-a200)",
+    "color-accent-dark": "var(--palette-pink-700)",
+    "color-primary-contrast": "var(--color-dark-contrast)",
+    "color-accent-contrast": "var(--color-dark-contrast)"
+  },
+  "output": "static"
+}
