@@ -1,8 +1,8 @@
 {
   "name": "iot-map",
   "scripts": {
-    "dev": "next -p 3001",
-    "dev:local": "SERVER_ADDR=http://localhost:3000 next -p 3001",
+    "dev":"yarn toolbox && next -p 3001",
+    "dev:local": "yarn toolbox && SERVER_ADDR=http://localhost:3000 next -p 3001",
     "build": "yarn toolbox && next build && next export && touch out/.nojekyll",
     "start": "next start",
     "toolbox": "react-toolbox-themr --config=./.toolbox"
