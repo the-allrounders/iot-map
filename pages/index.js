@@ -23,6 +23,20 @@ const Wrapper = styled.section`
   }
 `;
 
+const StyledButton = styled(Button)`
+  position: absolute !important;
+  top: 1em;
+  transform: translateX(50%);
+  transition-property: box-shadow, background-color, color, left !important;
+  left: 0;
+  
+  ${p => p.open && 'left: 250px'}
+`;
+
+const StyledNavDrawer = styled(NavDrawer)`
+  overflow: visible !important;
+`;
+
 class MapPage extends Component {
   state = {
     currentPosition: {
@@ -88,7 +102,7 @@ class MapPage extends Component {
     if(!this.state.loaded) {
       return <span>Loading map...</span>;
     }
-    const { Map, TileLayer, MarkerLayer } = this.Leaflet;
+    const { Map, TileLayer, MarkerLayer, ZoomControl } = this.Leaflet;
     return (
       <ThemeProvider theme={theme}>
         <div>
@@ -102,7 +116,9 @@ class MapPage extends Component {
                     center={this.state.currentPosition}
                     zoom={10}
                     ref={c => this.map = c}
+                    zoomControl={false}
                   >
+                    <ZoomControl position='bottomright' />
                     <MarkerLayer
                       markers={this.state.devices}
                       latitudeExtractor={e => e.location.latitude}
@@ -122,16 +138,24 @@ class MapPage extends Component {
                       url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                     />
                   </Map>
+                  <StyledButton
+                    icon={this.state.drawerActive ? 'close' : 'keyboard_arrow_right'}
+                    floating
+                    accent
+                    mini
+                    onMouseUp={() => this.setState({ drawerActive: !this.state.drawerActive })}
+                    open={this.state.drawerActive}
+                  />
                 </Panel>
-                <NavDrawer
-                  active={this.state.drawerActive}
+                <StyledNavDrawer
+                  active={false}
                   pinned={this.state.drawerActive}
+                  permanentAt='xxxl'
                   right
-                  width='wide'
+                  width={100}
                 >
                   <DevicePanel device={this.state.devices.find(device => device._id === this.state.activeDevice)} />
-                  <Button icon='close' floating accent mini onMouseUp={() => this.setState({ drawerActive: false })} />
-                </NavDrawer>
+                </StyledNavDrawer>
               </Layout>
             </Wrapper>
           </NoSSR>
