@@ -16,7 +16,7 @@ import theme from '../static/theme.js';
 const Wrapper = styled.section`
   width: 100vw;
   height: 100vh;
-  
+
   .leaflet-container {
       width: 100%;
       height: 100vh;
@@ -29,7 +29,7 @@ const StyledButton = styled(Button)`
   transform: translateX(50%);
   transition-property: box-shadow, background-color, color, left !important;
   left: 0;
-  
+
   ${p => p.open && 'left: 250px'}
 `;
 
@@ -90,7 +90,7 @@ class MapPage extends Component {
       return;
     }
 
-    if(this.lastFetch + 1000 < Date.now()) { // Fetch every second
+    if(this.lastFetch + 10000 < Date.now()) { // Fetch every second
       this.fetchData();
       this.lastFetch = Date.now();
     }
