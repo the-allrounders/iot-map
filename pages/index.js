@@ -34,7 +34,7 @@ const StyledButton = styled(Button)`
 `;
 
 const StyledNavDrawer = styled(NavDrawer)`
-  overflow: visible !important;
+  overflow: scroll !important;
 `;
 
 class MapPage extends Component {
