@@ -30,11 +30,14 @@ const StyledButton = styled(Button)`
   transition-property: box-shadow, background-color, color, left !important;
   left: 0;
 
-  ${p => p.open && 'left: 250px'}
+  ${p => p.open && 'left: 350px'}
 `;
 
 const StyledNavDrawer = styled(NavDrawer)`
   overflow: scroll !important;
+  @media screen and (min-width: 600px) {
+    width: 350px !important;
+  }
 `;
 
 class MapPage extends Component {
@@ -129,12 +132,6 @@ class MapPage extends Component {
                         onMarkerSelect: id => this.onMarkerSelect(id),
                       }}
                     />
-                    {/*<MarkerLayer*/}
-                    {/*markers={[this.state.currentPosition]}*/}
-                    {/*latitudeExtractor={l => l.lat}*/}
-                    {/*longitudeExtractor={l => l.lng}*/}
-                    {/*markerComponent={CurrentPosition}*/}
-                    {/*/>*/}
                     <TileLayer
                       url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                     />
