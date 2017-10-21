@@ -1,30 +1,23 @@
 import React from 'react';
-import AnimatedNumber from 'react-animated-number';
-import PropTypes from 'prop-types';
 
-const Nr = ({ value, stepPrecision = 0 }) => {
-  if (stepPrecision) {
-    value = parseFloat(value.toFixed(stepPrecision));
-  }
-  return (
-    <AnimatedNumber value={value} stepPrecision={stepPrecision} formatValue={val => val.toFixed(stepPrecision)} />
-  );
-};
+// Data entry types
+import Number from './types/number';
 
-Nr.propTypes = {
-  value: PropTypes.number.isRequired,
-  stepPrecision: PropTypes.number,
+const types = {
+  temperature: Number,
+  humidity: Number,
 };
 
 const DataEntry = ({ entry }) => {
-  const value = (typeof entry.value === 'number') ? <Nr value={entry.value} stepPrecision={2} /> : entry.value;
+  const DataEntryType = types[entry.type];
+  const value = DataEntryType ? <DataEntryType entry={entry} /> : entry.value;
   return (
     <li>
       <h3>{entry.label}</h3>
       <ul>
         <li>key: {entry.key}</li>
         <li>type: {entry.type}</li>
-        <li>value: {value}</li>
+        <li>{value}</li>
       </ul>
     </li>
   );
