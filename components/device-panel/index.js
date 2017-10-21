@@ -8,6 +8,10 @@ const Wrapper = styled.div`
   padding: 0 20px 20px 20px;
 `;
 
+const EmptyText = styled.p`
+  padding: 0 16px;
+`;
+
 class DevicePanel extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +46,7 @@ class DevicePanel extends Component {
     if(!device) {
       return (
         <div>
-          <p>Please first select a marker on the map to show its info.</p>
+          <EmptyText>Please first select a marker on the map to show its info.</EmptyText>
         </div>
       );
     }
