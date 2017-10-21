@@ -90,7 +90,7 @@ class MapPage extends Component {
       return;
     }
 
-    if(this.lastFetch + 10000 < Date.now()) { // Fetch every second
+    if(this.lastFetch + 1000 < Date.now()) { // Fetch every second
       this.fetchData();
       this.lastFetch = Date.now();
     }
