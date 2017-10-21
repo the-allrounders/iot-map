@@ -117,6 +117,7 @@ class MapPage extends Component {
                     zoom={10}
                     ref={c => this.map = c}
                     zoomControl={false}
+                    onClick={() => this.setState({ drawerActive: false })}
                   >
                     <ZoomControl position='bottomright' />
                     <MarkerLayer
