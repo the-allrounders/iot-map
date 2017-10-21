@@ -16,7 +16,7 @@ class DevicePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actuator: props.device.actuator || '',
+      actuator: props.device ? props.device.actuator : '',
     };
   }
 
