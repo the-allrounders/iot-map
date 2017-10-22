@@ -50,7 +50,7 @@ class Marker extends Component {
     return (
       <MarkerIcon>
         <MarkerIconInner>
-          {parseFloat(temperature.value).toFixed(1)}
+          {parseFloat(temperature.value || 0).toFixed(1)}
         </MarkerIconInner>
       </MarkerIcon>
     );
