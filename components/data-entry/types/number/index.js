@@ -7,11 +7,14 @@ const Number = ({ entry }) => {
     value = parseFloat(value.toFixed(Number.stepPrecision));
   }
   return (
-    <AnimatedNumber
-      value={value}
-      stepPrecision={Number.stepPrecision}
-      formatValue={val => val.toFixed(Number.stepPrecision)}
-    />
+    <div>
+      <span>value: </span>
+      <AnimatedNumber
+        value={value}
+        stepPrecision={Number.stepPrecision}
+        formatValue={val => val.toFixed(Number.stepPrecision)}
+      />
+    </div>
   );
 };
 
