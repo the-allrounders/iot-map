@@ -2,10 +2,13 @@ import React from 'react';
 
 // Data entry types
 import Number from './types/number';
+import ImageUrl from './types/image-url';
 
 const types = {
   temperature: Number,
   humidity: Number,
+  windforce: Number,
+  image_url: ImageUrl,
 };
 
 const DataEntry = ({ entry }) => {
