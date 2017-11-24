@@ -105,6 +105,13 @@ class MapPage extends Component {
     if(!this.state.loaded) {
       return <span>Loading map...</span>;
     }
+
+    const devices = this.state.devices.filter(device => (
+      device.location && 
+      typeof device.location.latitude === 'number' &&
+      typeof device.location.longitude === 'number'
+    ));
+    
     const { Map, TileLayer, MarkerLayer, ZoomControl } = this.Leaflet;
     return (
       <ThemeProvider theme={theme}>
@@ -124,7 +131,7 @@ class MapPage extends Component {
                   >
                     <ZoomControl position='bottomright' />
                     <MarkerLayer
-                      markers={this.state.devices}
+                      markers={devices}
                       latitudeExtractor={e => e.location.latitude}
                       longitudeExtractor={e => e.location.longitude}
                       markerComponent={Marker}
@@ -152,7 +159,7 @@ class MapPage extends Component {
                   right
                   width={100}
                 >
-                  <DevicePanel device={this.state.devices.find(device => device._id === this.state.activeDevice)} />
+                  <DevicePanel device={devices.find(device => device._id === this.state.activeDevice)} />
                 </StyledNavDrawer>
               </Layout>
             </Wrapper>
