@@ -21,7 +21,7 @@
     "react-leaflet-marker-layer": "ianwensink/react-leaflet-marker-layer",
     "react-no-ssr": "^1.1.0",
     "react-toolbox": "^2.0.0-beta.12",
-    "styled-components": "^2.1.2",
+    "styled-components": "^3.1.6",
     "webpack": "latest"
   },
   "devDependencies": {
