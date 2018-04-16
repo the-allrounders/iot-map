@@ -16,7 +16,7 @@
     "prop-types": "latest",
     "react": "^15.6.1",
     "react-animated-number": "^0.4.3",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.3.2",
     "react-leaflet": "^1.6.5",
     "react-leaflet-marker-layer": "ianwensink/react-leaflet-marker-layer",
     "react-no-ssr": "^1.1.0",
